@@ -1,0 +1,25 @@
+services:
+  bk:
+    container_name: bot_web_bk
+    build:
+      context: ./character_bot_personalization_web/character_bot_bk
+      dockerfile: Dockerfile
+    
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://host.docker.internal:11434"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  config:
+    container_name: bot_web_config
+    build:
+      context: ./telegram_bot_configuration
+      dockerfile: Dockerfile
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://host.docker.internal:11434"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
